@@ -2,7 +2,7 @@ import 'package:coronapp/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'resources/resources.dart';
+import 'package:coronapp/resources/resources.dart';
 
 class NewsListProvider extends ChangeNotifier {
   final NewsRepository _repository = NewsRepository();

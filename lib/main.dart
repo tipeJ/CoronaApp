@@ -1,4 +1,4 @@
-import 'package:coronapp/mainlist.dart';
+import 'package:coronapp/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -22,10 +22,60 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: ChangeNotifierProvider(
+      home: _BottomAppBarWrapper()
+    );
+  }
+}
+
+class _BottomAppBarWrapper extends StatefulWidget {
+  _BottomAppBarWrapper({Key key}) : super(key: key);
+
+  @override
+  _BottomAppBarWrapperState createState() => _BottomAppBarWrapperState();
+}
+
+class _BottomAppBarWrapperState extends State<_BottomAppBarWrapper> {
+  int _currentPage = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentPage,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.table_chart),
+            title: Text("News")
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.multiline_chart),
+            title: Text("Status")
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.settings),
+            title: Text("Settings")
+          )
+        ],
+        onTap: (i) {
+          setState(() {
+            _currentPage = i;
+          });
+        },
+      ),
+      body: _getPage()
+    );
+  }
+
+  Widget _getPage() {
+    if (_currentPage == 0) {
+      return ChangeNotifierProvider(
         create: (_) => NewsListProvider(),
         child: MainList(),
-      )
-    );
+      );
+    } else if (_currentPage == 1) {
+      return StatusScreen();
+    } else {
+      return Scaffold();
+    }
   }
 }
