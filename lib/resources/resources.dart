@@ -9,3 +9,10 @@ extension nonNull on List {
     return this.where((w) => notNull(w)).toList();
   }
 }
+
+extension formattedStringExtension on DateTime {
+
+  String formatString() {
+    return "$day/$month/$year, $hour:$minute";
+  }
+}
