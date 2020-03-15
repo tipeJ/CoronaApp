@@ -23,11 +23,16 @@ class NewsListProvider extends ChangeNotifier {
 }
 
 class MainList extends StatelessWidget {
-  const MainList({Key key}) : super(key: key);
+  bool _fetched = false;
+  
+  MainList({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<NewsListProvider>(context).news.isEmpty) Provider.of<NewsListProvider>(context).refreshNews();
+    if (Provider.of<NewsListProvider>(context).news.isEmpty && !_fetched) {
+      _fetched = true;
+      Provider.of<NewsListProvider>(context).refreshNews();
+    };
     return Scaffold(
       appBar: AppBar(
         title: const Text("News"),
@@ -37,21 +42,25 @@ class MainList extends StatelessWidget {
           builder: (_, provider, child) {
             return RefreshIndicator(
               onRefresh: provider.refreshNews,
-              child: ListView.separated(
-                itemCount: provider.news.length,
-                separatorBuilder: (_, i) => const Divider(height: 0.0),
-                itemBuilder: (_, i) {
-                  final item = provider.news[i];
-                  return Dismissible(
-                    key: Key(item.url),
-                    onDismissed: (direction) {
-                      // TODO: Implement options (save, share, etc.)
-                      provider.removeItemAt(i);
+              child: provider.news.isEmpty
+                ? const Center(child: Text("No News Found"))
+                : ListView.builder(
+                    itemCount: provider.news.length,
+                    itemBuilder: (_, i) {
+                      final item = provider.news[i];
+                      return Dismissible(
+                        key: Key(item.url),
+                        onDismissed: (direction) {
+                          // TODO: Implement options (save, share, etc.)
+                          provider.removeItemAt(i);
+                        },
+                        child: Card(
+                          elevation: 2.0,
+                          child: _NewsItem(item: item)
+                        )
+                      );
                     },
-                    child: _NewsItem(item: item)
-                  );
-                },
-              ),
+                  )
             );
           },
         ),
