@@ -35,7 +35,7 @@ class _BottomAppBarWrapper extends StatefulWidget {
 }
 
 class _BottomAppBarWrapperState extends State<_BottomAppBarWrapper> {
-  int _currentPage = 1;
+  int _currentPage = 0;
 
   @override
   Widget build(BuildContext context) {

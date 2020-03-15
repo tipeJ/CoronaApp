@@ -1,4 +1,3 @@
-export 'sources.dart';
 export 'news_repository.dart';
 
 bool notNull(Object o) => o != null;
@@ -12,7 +11,10 @@ extension nonNull on List {
 
 extension formattedStringExtension on DateTime {
 
+  /// Returns a nicely formatted string display of the DateTime object
   String formatString() {
-    return "$day/$month/$year, $hour:$minute";
+    String hourS = hour < 10 ? "0$hour" : hour.toString();
+    String minuteS = minute < 10 ? "0$minute" : minute.toString();
+    return "$day/$month/$year, $hourS:$minuteS";
   }
 }
