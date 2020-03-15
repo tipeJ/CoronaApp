@@ -11,6 +11,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'CoronaApp',
       theme: ThemeData(
+        brightness: Brightness.dark,
         // This is the theme of your application.
         //
         // Try running your application with "flutter run". You'll see the
@@ -35,7 +36,7 @@ class _BottomAppBarWrapper extends StatefulWidget {
 }
 
 class _BottomAppBarWrapperState extends State<_BottomAppBarWrapper> {
-  int _currentPage = 0;
+  int _currentPage = 1;
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +74,13 @@ class _BottomAppBarWrapperState extends State<_BottomAppBarWrapper> {
         child: MainList(),
       );
     } else if (_currentPage == 1) {
-      return StatusScreen();
+      return ChangeNotifierProvider(
+        create: (_) => OverviewStatsProvider(),
+        child: Navigator(
+          initialRoute: '/',
+          onGenerateRoute: (settings) => StatsRouter.generateRoute(settings.name, settings.arguments),
+        )
+      );
     } else {
       return Scaffold();
     }
