@@ -10,26 +10,29 @@ class TimelineStatsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<OverviewStatsProvider>(
-      builder: (_, provider, child) {
-        if (provider.stats != null) return SafeArea(
-          child: ListView.builder(
-            itemCount: provider.stats.dailyStats.length,
-            itemBuilder: (_, i) => StickyHeader(
-              header: Container(
-                height: 35.0,
-                alignment: Alignment.centerLeft,
-                width: MediaQuery.of(context).size.width,
-                color: Theme.of(context).canvasColor,
-                padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Text(provider.stats.dailyStats[i].reportDate.formatString(includeTime: false)),
+    return Scaffold(
+      appBar: AppBar(title: const Text("Timeline")),
+      body: Consumer<OverviewStatsProvider>(
+        builder: (_, provider, child) {
+          if (provider.stats != null) return SafeArea(
+            child: ListView.builder(
+              itemCount: provider.stats.dailyStats.length,
+              itemBuilder: (_, i) => StickyHeader(
+                header: Container(
+                  height: 35.0,
+                  alignment: Alignment.centerLeft,
+                  width: MediaQuery.of(context).size.width,
+                  color: Theme.of(context).canvasColor,
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Text(provider.stats.dailyStats[i].reportDate.formatString(includeTime: false)),
+                ),
+                content: DailyStatsCard(stats: provider.stats.dailyStats[i])
               ),
-              content: DailyStatsCard(stats: provider.stats.dailyStats[i])
-            ),
-          )
-        );
-        return const SliverToBoxAdapter();
-      },
+            )
+          );
+          return const SliverToBoxAdapter();
+        },
+      )
     );
   }
 }

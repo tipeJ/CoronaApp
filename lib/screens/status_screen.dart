@@ -22,15 +22,13 @@ class StatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Provider.of<OverviewStatsProvider>(context).stats == null) Provider.of<OverviewStatsProvider>(context).refreshStatus();
     return Scaffold(
+      appBar: AppBar(title: const Text("Stats")),
       body: RefreshIndicator(
         onRefresh: () => Provider.of<OverviewStatsProvider>(context).refreshStatus(),
         child: CustomScrollView(
           slivers: [
-            SliverAppBar(
-              title: const Text("Stats"),
-            ),
             SliverPadding(
-              padding: const EdgeInsets.all(10.0),
+              padding: const EdgeInsets.all(5.0),
               sliver: SliverList(delegate: SliverChildListDelegate([
                 StatsOverviewCountCard(),
                 OverAllStatsChart(),

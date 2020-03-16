@@ -39,6 +39,7 @@ class MainList extends StatelessWidget {
         title: const Text("News"),
       ),
       body: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 5.0),
         child: Consumer<NewsListProvider>(
           builder: (_, provider, child) {
             return RefreshIndicator(
