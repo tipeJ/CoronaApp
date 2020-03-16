@@ -30,6 +30,7 @@ class StatusScreen extends StatelessWidget {
             SliverPadding(
               padding: const EdgeInsets.all(5.0),
               sliver: SliverList(delegate: SliverChildListDelegate([
+                DailyStatCard(),
                 StatsOverviewCountCard(),
                 OverAllStatsChart(),
                 Row(children: [
@@ -42,6 +43,21 @@ class StatusScreen extends StatelessWidget {
                           padding: const EdgeInsets.all(10.0),
                           child: Text(
                             "Timeline",
+                            style: Theme.of(context).textTheme.subhead,
+                          ),
+                        )
+                      )
+                    )
+                  ),
+                  Expanded(
+                    child: Card(
+                      child: InkWell(
+                        onTap: () => Navigator.of(context).pushNamed('allcountries'),
+                        child: Container(
+                          alignment: Alignment.center,
+                          padding: const EdgeInsets.all(10.0),
+                          child: Text(
+                            "Countries",
                             style: Theme.of(context).textTheme.subhead,
                           ),
                         )
