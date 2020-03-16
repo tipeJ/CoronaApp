@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:coronapp/models/models.dart';
 import 'package:coronapp/resources/resources.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 
 class StatsRepository {
@@ -15,6 +16,8 @@ class StatsRepository {
   static final StatsRepository _instance = StatsRepository._internal();
 
   Client client = Client();
+
+  Map<String, dynamic> countriesMap;
 
   /// Function for fetching news content from all RSS Sources
   Future<VirusStats> fetchVirusStats() async {
@@ -34,6 +37,20 @@ class StatsRepository {
     final response = await client.get(mathApiAllRegionsUrl);
     final stats = _decodeRegionStats(response.body);
     return stats;
+  }
+
+  Future<List<RegionStats>> fetchRegionStats(String countryName) async {
+    if (countriesMap == null) await fetchCountriesCodes();
+    final response = await client.get(mathApiCountryUrl + countriesMap[countryName] + '/confirmed');
+    final stats = _decodeRegionStats(response.body);
+    return stats;
+  }
+
+  Future<List<dynamic>> fetchCountriesCodes() async {
+    if (countriesMap != null) return countriesMap.keys.toList();
+    final file = await rootBundle.loadString("assets/countries.json");
+    countriesMap = await compute(_decodeCountriesJson, file);
+    return countriesMap.keys.toList();
   }
 }
 
@@ -58,4 +75,9 @@ List<RegionStats> _decodeRegionStats(String body) {
     stats.add(RegionStats.fromJson(parsedJson[i]));
   }
   return stats;
+}
+
+Map<String, dynamic> _decodeCountriesJson(String countriesJson) {
+  final parsedJson = json.decode(countriesJson);
+  return parsedJson['countries'];
 }

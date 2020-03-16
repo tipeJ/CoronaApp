@@ -6,13 +6,21 @@ import 'package:coronapp/resources/resources.dart';
 
 class RegionListStatsProvider extends ChangeNotifier {
   final _repository = StatsRepository();
+  final String countryName;
+
+  RegionListStatsProvider({this.countryName});
+
   List<RegionStats> _stats;
   String _statsFilterString = "";
 
   List<RegionStats> get stats => _stats == null || _statsFilterString.isEmpty ? _stats : _stats.where((s) => _containsFilterString(s)).toList();
 
   Future<void> refreshStats() async {
-    _stats = await _repository.fetchAllRegionStats();
+    if (countryName == null) {
+      _stats = await _repository.fetchAllRegionStats();
+    } else {
+      _stats = await _repository.fetchRegionStats(countryName);
+    }
     notifyListeners();
   }
 

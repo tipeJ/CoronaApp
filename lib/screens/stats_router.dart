@@ -18,13 +18,25 @@ class StatsRouter {
       case 'allregions':
         child = ChangeNotifierProvider(
           create: (_) => RegionListStatsProvider(),
-          child: RegionlistStatsScreen(),
+          child: RegionlistStatsScreen()
+        );
+        break;
+      case 'allcountries':
+        child = ChangeNotifierProvider(
+          create: (_) => CountriesListProvider(),
+          child: CountriesListStatsScreen()
+        );
+        break;
+      case 'country':
+        child = ChangeNotifierProvider(
+          create: (_) => RegionListStatsProvider(countryName: args),
+          child: RegionlistStatsScreen()
         );
         break;
       default:
         child = Scaffold(
           body: Center(
-            child: Text('No route defined for $route'),
+            child: Text('No route defined for $route')
           ),
         );
     }
