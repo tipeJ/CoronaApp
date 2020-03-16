@@ -2,16 +2,29 @@ import 'package:coronapp/models/models.dart';
 import 'package:coronapp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sticky_headers/sticky_headers/widget.dart';
 import 'package:coronapp/resources/resources.dart';
 
 class RegionListStatsProvider extends ChangeNotifier {
   final _repository = StatsRepository();
-  List<RegionStats> stats;
+  List<RegionStats> _stats;
+  String _statsFilterString = "";
+
+  List<RegionStats> get stats => _stats == null || _statsFilterString.isEmpty ? _stats : _stats.where((s) => _containsFilterString(s)).toList();
 
   Future<void> refreshStats() async {
-    stats = await _repository.fetchAllRegionStats();
+    _stats = await _repository.fetchAllRegionStats();
     notifyListeners();
+  }
+
+  void filterStats(String filter) {
+    _statsFilterString = filter;
+    notifyListeners();
+  }
+
+  bool _containsFilterString(RegionStats stats) {
+    bool contains = stats.provinceState != null ? stats.provinceState.toLowerCase().contains(_statsFilterString.toLowerCase()) : false;
+    if (contains) return true;
+    return stats.countryRegion.toLowerCase().contains(_statsFilterString.toLowerCase());
   }
 }
 
@@ -25,14 +38,28 @@ class RegionlistStatsScreen extends StatelessWidget {
       appBar: AppBar(title: const Text("Timeline")),
       body: Consumer<RegionListStatsProvider>(
         builder: (_, provider, child) {
-          if (provider.stats != null && provider.stats.isNotEmpty) return SafeArea(
-            child: ListView.builder(
-              itemCount: provider.stats.length,
-              itemBuilder: (_, i) => RegionStatsCard(stats: provider.stats[i]),
-            )
+          if (provider.stats != null) return SafeArea(
+            child: CustomScrollView(slivers: <Widget>[
+              SliverAppBar(
+                floating: true,
+                automaticallyImplyLeading: false,
+                title: TextField(
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: "Filter Regions"
+                  ),
+                  onChanged: (str) => provider.filterStats(str),
+                ),
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (_, i) => RegionStatsCard(stats: provider.stats[i]),
+                  childCount: provider.stats.length
+                )
+              )
+            ])
           );
           if (provider.stats == null) return const SizedBox();
-          return const Center(child: CircularProgressIndicator());
         },
       )
     );

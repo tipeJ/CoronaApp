@@ -46,8 +46,9 @@ class MainList extends StatelessWidget {
               onRefresh: provider.refreshNews,
               child: provider.news.isEmpty
                 ? const Center(child: Text("No News Found"))
-                : ListView.builder(
+                : ListView.separated(
                     itemCount: provider.news.length,
+                    separatorBuilder: (_, __) => const Divider(),
                     itemBuilder: (_, i) {
                       final item = provider.news[i];
                       return Dismissible(
@@ -56,10 +57,7 @@ class MainList extends StatelessWidget {
                           // TODO: Implement options (save, share, etc.)
                           provider.removeItemAt(i);
                         },
-                        child: Card(
-                          elevation: 2.0,
-                          child: NewsItem(item: item)
-                        )
+                        child: NewsItem(item: item)
                       );
                     },
                   )

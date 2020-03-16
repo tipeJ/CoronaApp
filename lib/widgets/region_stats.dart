@@ -14,26 +14,27 @@ class RegionStatsCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(stats.countryRegion, style: Theme.of(context).textTheme.headline),
-          stats.provinceState != null
-            ? Text(stats.provinceState, style: Theme.of(context).textTheme.subhead)
-            : null,
-          const Divider(),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text(stats.countryRegion, style: Theme.of(context).textTheme.headline),
+                  stats.provinceState != null
+                    ? Text(stats.provinceState, style: Theme.of(context).textTheme.subhead)
+                    : null,
+                  const SizedBox(height: 3.5),
                   Text("Recovered: ${stats.recovered}", style: TextStyle(color: Colors.greenAccent)),
                   Text("Active: ${stats.active}"),
                   Text("Deaths: ${stats.deaths}", style: TextStyle(color: Colors.redAccent)),
-                ],
+                ].nonNulls(),
               ),
               Text(stats.confirmed.toString(), style: Theme.of(context).textTheme.title)
             ]
-          )
-        ].nonNulls()
+          ),
+          const Divider()
+        ]
       )
     );
   }
