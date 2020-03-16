@@ -61,3 +61,39 @@ class DailyStats {
     objectId : json['objectid'],
   );
 }
+
+class RegionStats {
+  final DateTime lastUpdate;
+  final String provinceState;
+  final String countryRegion;
+  final double latitude;
+  final double longitude;
+  final int confirmed;
+  final int recovered;
+  final int deaths;
+  final int active;
+
+  const RegionStats({
+    this.lastUpdate,
+    this.provinceState,
+    this.countryRegion,
+    this.latitude,
+    this.longitude,
+    this.confirmed,
+    this.recovered,
+    this.deaths,
+    this.active,
+  });
+
+  static RegionStats fromJson(dynamic json,) => RegionStats(
+    lastUpdate : DateTime.fromMillisecondsSinceEpoch(json['lastUpdate']),
+    provinceState : json['provinceState'],
+    countryRegion : json['countryRegion'],
+    latitude : json['lat'].toDouble(),
+    longitude : json['long'].toDouble(),
+    confirmed : json['confirmed'],
+    recovered : json['recovered'],
+    deaths : json['deaths'],
+    active : json['active'],
+  );
+}

@@ -1,6 +1,5 @@
 import 'package:coronapp/models/models.dart';
 import 'package:coronapp/resources/resources.dart';
-import 'package:coronapp/screens/screens.dart';
 import 'package:coronapp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -51,7 +50,7 @@ class StatusScreen extends StatelessWidget {
                   Expanded(
                     child: Card(
                       child: InkWell(
-                        onTap: () => Navigator.of(context).pushNamed('timeline'),
+                        onTap: () => Navigator.of(context).pushNamed('allregions'),
                         child: Container(
                           alignment: Alignment.center,
                           padding: const EdgeInsets.all(10.0),

@@ -1,5 +1,6 @@
 import 'package:coronapp/screens/screens.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class StatsRouter {
   static Route<dynamic> generateRoute(String route, dynamic args, [String key]) {
@@ -13,6 +14,12 @@ class StatsRouter {
         break;
       case 'timeline':
         child = TimelineStatsScreen();
+        break;
+      case 'allregions':
+        child = ChangeNotifierProvider(
+          create: (_) => RegionListStatsProvider(),
+          child: RegionlistStatsScreen(),
+        );
         break;
       default:
         child = Scaffold(

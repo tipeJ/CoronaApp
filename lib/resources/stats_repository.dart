@@ -29,6 +29,12 @@ class StatsRepository {
       dailyStats: dailyStats
     );
   }
+
+  Future<List<RegionStats>> fetchAllRegionStats() async {
+    final response = await client.get(mathApiAllRegionsUrl);
+    final stats = _decodeRegionStats(response.body);
+    return stats;
+  }
 }
 
 OverviewStats _decodeOverviewStats(String body) {
@@ -41,6 +47,15 @@ List<DailyStats> _decodeDailyStats(String body) {
   List<DailyStats> stats = [];
   for (var i = parsedJson.length-1; i >= 0; i--) {
     stats.add(DailyStats.fromJson(parsedJson[i]));
+  }
+  return stats;
+}
+
+List<RegionStats> _decodeRegionStats(String body) {
+  final parsedJson = json.decode(body);
+  List<RegionStats> stats = [];
+  for (var i = parsedJson.length-1; i >= 0; i--) {
+    stats.add(RegionStats.fromJson(parsedJson[i]));
   }
   return stats;
 }

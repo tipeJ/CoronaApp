@@ -15,8 +15,12 @@ class TimelineStatsScreen extends StatelessWidget {
       body: Consumer<OverviewStatsProvider>(
         builder: (_, provider, child) {
           if (provider.stats != null) return SafeArea(
-            child: ListView.builder(
+            child: ListView.separated(
               itemCount: provider.stats.dailyStats.length,
+              separatorBuilder: (_, __) => const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0),
+                child: Divider()
+              ),
               itemBuilder: (_, i) => StickyHeader(
                 header: Container(
                   height: 35.0,
