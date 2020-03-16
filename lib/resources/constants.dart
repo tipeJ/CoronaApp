@@ -11,3 +11,6 @@ const error_nointernet = "Connect to a network to proceed";
 const prefs_darkmode = "prefs_darkmode";
 const prefs_home_region = "prefs_home";
 const prefs_show_home_infographic = "prefs_showhomeinfo";
+
+const version_number = "0.1";
+const app_version = "COVID19 Coronavirus App v$version_number";

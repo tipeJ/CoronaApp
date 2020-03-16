@@ -54,6 +54,16 @@ class SettingsScreen extends StatelessWidget {
               },
             ),
           ),
+          ListTile(
+            title: const Text("App Information"),
+            onTap: () => showDialog(
+              context: context,
+              child: AlertDialog(
+                title: const Text(app_version),
+                content: const SizedBox(),
+              )
+            ),
+          ),
         ]),
       )
     );
