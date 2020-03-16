@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:coronapp/models/models.dart';
+import 'package:coronapp/resources/resources.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 
@@ -18,7 +19,7 @@ class NewsRepository {
   /// Function for fetching news content from all RSS Sources
   Future<List<NewsPiece>> fetchAllNews() async {
     List<NewsPiece> items = [];
-    final response = await client.get('http://10.0.2.2:8080/news');
+    final response = await client.get(news_api_url);
     items = await compute(_decodeNewsJsonResponse, response.body);
     return items;
   }
@@ -27,7 +28,6 @@ class NewsRepository {
 List<NewsPiece> _decodeNewsJsonResponse(String response) {
   List<NewsPiece> items = [];
   final j = json.decode(response);
-  print(j.length);
   for (var i = 0; i < j.length; i++) {
     final n = j[i];
     final published = _parseNewsJsonDate(n['pubDate']);

@@ -11,6 +11,7 @@ class OverviewStatsProvider extends ChangeNotifier {
   Future<void> refreshStatus() async {
     stats = await _repository.fetchVirusStats();
     notifyListeners();
+    return Future.value();
   }
 }
 
@@ -19,11 +20,11 @@ class StatusScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (Provider.of<OverviewStatsProvider>(context).stats == null) Provider.of<OverviewStatsProvider>(context).refreshStatus();
+    if (Provider.of<OverviewStatsProvider>(context).stats == null) Provider.of<OverviewStatsProvider>(context, listen: false).refreshStatus();
     return Scaffold(
       appBar: AppBar(title: const Text("Stats")),
       body: RefreshIndicator(
-        onRefresh: () => Provider.of<OverviewStatsProvider>(context).refreshStatus(),
+        onRefresh: () async => Provider.of<OverviewStatsProvider>(context, listen: false).refreshStatus(),
         child: CustomScrollView(
           slivers: [
             SliverPadding(

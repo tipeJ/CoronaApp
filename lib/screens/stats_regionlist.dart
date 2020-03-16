@@ -35,7 +35,7 @@ class RegionlistStatsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Provider.of<RegionListStatsProvider>(context).stats == null) Provider.of<RegionListStatsProvider>(context).refreshStats();
     return Scaffold(
-      appBar: AppBar(title: const Text("Timeline")),
+      appBar: AppBar(title: const Text("Regions")),
       body: Consumer<RegionListStatsProvider>(
         builder: (_, provider, child) {
           if (provider.stats != null) return SafeArea(
