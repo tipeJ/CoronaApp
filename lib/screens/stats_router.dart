@@ -22,13 +22,5 @@ class StatsRouter {
         );
     }
     return child;
-    return WillPopScope(
-      child: child,
-      onWillPop: () async {
-        print("ASD");
-        Navigator.of(context).pop();
-        return Future.value(false);
-      },
-    );
   }
 }

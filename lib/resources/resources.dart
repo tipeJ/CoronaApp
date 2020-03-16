@@ -14,7 +14,8 @@ extension nonNull on List {
 extension formattedStringExtension on DateTime {
 
   /// Returns a nicely formatted string display of the DateTime object
-  String formatString() {
+  String formatString({bool includeTime = true}) {
+    if (!includeTime) return "$day/$month/$year";
     String hourS = hour < 10 ? "0$hour" : hour.toString();
     String minuteS = minute < 10 ? "0$minute" : minute.toString();
     return "$day/$month/$year, $hourS:$minuteS";
