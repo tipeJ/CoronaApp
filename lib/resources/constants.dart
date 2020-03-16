@@ -4,6 +4,6 @@ const mathApiAllRegionsUrl = "https://covid19.mathdro.id/api/deaths";
 const mathApiCountryUrl = "https://covid19.mathdro.id/api/countries/";
 
 /// The Address for the news API
-const news_api_url = "http://10.0.2.2:8080/news";
+const news_api_url = "https://covid19-stats-and-news.herokuapp.com/news";
 
 const prefs_darkmode = "prefs_darkmode";

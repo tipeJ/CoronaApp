@@ -35,14 +35,14 @@ class StatsRepository {
 
   Future<List<RegionStats>> fetchAllRegionStats() async {
     final response = await client.get(mathApiAllRegionsUrl);
-    final stats = _decodeRegionStats(response.body);
+    final stats = await compute(_decodeRegionStats, response.body);
     return stats;
   }
 
   Future<List<RegionStats>> fetchRegionStats(String countryName) async {
     if (countriesMap == null) await fetchCountriesCodes();
     final response = await client.get(mathApiCountryUrl + countriesMap[countryName] + '/confirmed');
-    final stats = _decodeRegionStats(response.body);
+    final stats = await compute(_decodeRegionStats, response.body);
     return stats;
   }
 

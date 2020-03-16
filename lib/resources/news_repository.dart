@@ -33,7 +33,7 @@ List<NewsPiece> _decodeNewsJsonResponse(String response) {
     final published = _parseNewsJsonDate(n['pubDate']);
     items.add(NewsPiece(
       source: n['source'],
-      title: n['title'],
+      title: n['title'].replaceAll('&apos;', '"'),
       description: n['description'],
       url: n['url'],
       thumbnailUrl: n['thumbnailurl'],

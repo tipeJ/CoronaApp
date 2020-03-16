@@ -38,32 +38,29 @@ class MainList extends StatelessWidget {
       appBar: AppBar(
         title: const Text("News"),
       ),
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 5.0),
-        child: Consumer<NewsListProvider>(
-          builder: (_, provider, child) {
-            return RefreshIndicator(
-              onRefresh: provider.refreshNews,
-              child: provider.news.isEmpty
-                ? const Center(child: Text("No News Found"))
-                : ListView.separated(
-                    itemCount: provider.news.length,
-                    separatorBuilder: (_, __) => const Divider(),
-                    itemBuilder: (_, i) {
-                      final item = provider.news[i];
-                      return Dismissible(
-                        key: Key(item.url),
-                        onDismissed: (direction) {
-                          // TODO: Implement options (save, share, etc.)
-                          provider.removeItemAt(i);
-                        },
-                        child: NewsItem(item: item)
-                      );
-                    },
-                  )
-            );
-          },
-        ),
+      body: Consumer<NewsListProvider>(
+        builder: (_, provider, child) {
+          return RefreshIndicator(
+            onRefresh: provider.refreshNews,
+            child: provider.news.isEmpty
+              ? const Center(child: Text("No News Found"))
+              : ListView.separated(
+                  itemCount: provider.news.length,
+                  separatorBuilder: (_, __) => const Divider(),
+                  itemBuilder: (_, i) {
+                    final item = provider.news[i];
+                    return Dismissible(
+                      key: Key(item.url),
+                      onDismissed: (direction) {
+                        // TODO: Implement options (save, share, etc.)
+                        provider.removeItemAt(i);
+                      },
+                      child: NewsItem(item: item)
+                    );
+                  },
+                )
+          );
+        },
       ),
     );
   }
