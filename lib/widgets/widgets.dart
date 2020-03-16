@@ -4,3 +4,4 @@ export 'overall_chart.dart';
 export 'news_item.dart';
 export 'region_stats.dart';
 export 'daily_stat.dart';
+export 'home_stat_infoimage.dart';

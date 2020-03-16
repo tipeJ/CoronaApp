@@ -97,7 +97,8 @@ class StatusScreen extends StatelessWidget {
                           )
                         )
                       )
-                    ])
+                    ]),
+                    HomeStatImageCard()
                   ]))
                 ),
               ],

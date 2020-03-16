@@ -5,6 +5,7 @@ import 'package:coronapp/resources/resources.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class StatsRepository {
   factory StatsRepository(){
@@ -27,9 +28,20 @@ class StatsRepository {
     final dailyResponse = await client.get(mathApiDailyStatsUrl);
     final dailyStats = await compute(_decodeDailyStats, dailyResponse.body);
 
+    final prefs = await SharedPreferences.getInstance();
+    String countryInfoImageUrl;
+    if (prefs.getBool(prefs_show_home_infographic) ?? false) {
+      final home = prefs.getString(prefs_home_region);
+      if (home != null && home.isNotEmpty) {
+        if (countriesMap == null) await fetchCountriesCodes();
+        countryInfoImageUrl = mathApiCountryUrl + countriesMap[home] + '/og';
+      }
+    }
+
     return VirusStats(
       overviewStats: overviewStats,
-      dailyStats: dailyStats
+      dailyStats: dailyStats,
+      homeCountryImageUrl: countryInfoImageUrl
     );
   }
 

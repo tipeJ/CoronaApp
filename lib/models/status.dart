@@ -1,10 +1,12 @@
 class VirusStats {
   final OverviewStats overviewStats;
   final List<DailyStats> dailyStats;
+  final String homeCountryImageUrl;
 
   const VirusStats({
     this.overviewStats,
-    this.dailyStats
+    this.dailyStats,
+    this.homeCountryImageUrl
   });
 }
 

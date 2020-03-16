@@ -9,3 +9,5 @@ const news_api_url = "https://covid19-stats-and-news.herokuapp.com/news";
 const error_nointernet = "Connect to a network to proceed";
 
 const prefs_darkmode = "prefs_darkmode";
+const prefs_home_region = "prefs_home";
+const prefs_show_home_infographic = "prefs_showhomeinfo";
