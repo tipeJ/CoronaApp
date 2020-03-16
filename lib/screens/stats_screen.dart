@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:coronapp/models/models.dart';
 import 'package:coronapp/resources/resources.dart';
 import 'package:coronapp/widgets/widgets.dart';
@@ -6,10 +7,18 @@ import 'package:provider/provider.dart';
 
 class OverviewStatsProvider extends ChangeNotifier {
   final _repository = StatsRepository();
+  String error;
   VirusStats stats;
 
   Future<void> refreshStatus() async {
+    final connectivity = await (Connectivity().checkConnectivity());
+    if (connectivity == ConnectivityResult.none) {
+      error = error_nointernet;
+      notifyListeners();
+      return Future.value();
+    }
     stats = await _repository.fetchVirusStats();
+    error = null;
     notifyListeners();
     return Future.value();
   }
@@ -22,69 +31,82 @@ class StatusScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (Provider.of<OverviewStatsProvider>(context).stats == null) Provider.of<OverviewStatsProvider>(context, listen: false).refreshStatus();
     return Scaffold(
-      appBar: AppBar(title: const Text("Stats")),
+      appBar: AppBar(
+        title: const Text("Stats"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () => Provider.of<OverviewStatsProvider>(context, listen: false).refreshStatus(),
+          )
+        ],
+      ),
       body: RefreshIndicator(
         onRefresh: () async => Provider.of<OverviewStatsProvider>(context, listen: false).refreshStatus(),
-        child: CustomScrollView(
-          slivers: [
-            SliverPadding(
-              padding: const EdgeInsets.all(5.0),
-              sliver: SliverList(delegate: SliverChildListDelegate([
-                DailyStatCard(),
-                StatsOverviewCountCard(),
-                OverAllStatsChart(),
-                Row(children: [
-                  Expanded(
-                    child: Card(
-                      child: InkWell(
-                        onTap: () => Navigator.of(context).pushNamed('timeline'),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "Timeline",
-                            style: Theme.of(context).textTheme.subhead,
-                          ),
+        child: Provider.of<OverviewStatsProvider>(context, listen: false).error == null
+          ? CustomScrollView(
+              slivers: [
+                SliverPadding(
+                  padding: const EdgeInsets.all(5.0),
+                  sliver: SliverList(delegate: SliverChildListDelegate([
+                    DailyStatCard(),
+                    StatsOverviewCountCard(),
+                    OverAllStatsChart(),
+                    Row(children: [
+                      Expanded(
+                        child: Card(
+                          child: InkWell(
+                            onTap: () => Navigator.of(context).pushNamed('timeline'),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "Timeline",
+                                style: Theme.of(context).textTheme.subhead,
+                              ),
+                            )
+                          )
+                        )
+                      ),
+                      Expanded(
+                        child: Card(
+                          child: InkWell(
+                            onTap: () => Navigator.of(context).pushNamed('allcountries'),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "Countries",
+                                style: Theme.of(context).textTheme.subhead,
+                              ),
+                            )
+                          )
+                        )
+                      ),
+                      Expanded(
+                        child: Card(
+                          child: InkWell(
+                            onTap: () => Navigator.of(context).pushNamed('allregions'),
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: const EdgeInsets.all(10.0),
+                              child: Text(
+                                "Regions",
+                                style: Theme.of(context).textTheme.subhead,
+                              ),
+                            )
+                          )
                         )
                       )
-                    )
-                  ),
-                  Expanded(
-                    child: Card(
-                      child: InkWell(
-                        onTap: () => Navigator.of(context).pushNamed('allcountries'),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "Countries",
-                            style: Theme.of(context).textTheme.subhead,
-                          ),
-                        )
-                      )
-                    )
-                  ),
-                  Expanded(
-                    child: Card(
-                      child: InkWell(
-                        onTap: () => Navigator.of(context).pushNamed('allregions'),
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding: const EdgeInsets.all(10.0),
-                          child: Text(
-                            "Regions",
-                            style: Theme.of(context).textTheme.subhead,
-                          ),
-                        )
-                      )
-                    )
-                  )
-                ])
-              ]))
-            ),
-            
-          ],
-        )
+                    ])
+                  ]))
+                ),
+              ],
+          )
+        : Container(
+            width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
+            child: Center(child: Text(Provider.of<OverviewStatsProvider>(context, listen: false).error))
+          )
       )
     );
   }

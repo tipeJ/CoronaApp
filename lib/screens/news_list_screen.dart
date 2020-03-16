@@ -1,20 +1,28 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:coronapp/models/models.dart';
 import 'package:coronapp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:coronapp/resources/resources.dart';
 
 class NewsListProvider extends ChangeNotifier {
   final NewsRepository _repository = NewsRepository();
+  String error;
   List<NewsPiece> news = [];
 
   Future<void> refreshNews() async {
+    final connectivity = await (Connectivity().checkConnectivity());
+    if (connectivity == ConnectivityResult.none) {
+      error = error_nointernet;
+      notifyListeners();
+      return;
+    }
     if (news.isNotEmpty) {
       news = const [];
       notifyListeners();
     }
     news = await _repository.fetchAllNews();
+    error = null; 
     notifyListeners();
   }
   void removeItemAt(int location) {
@@ -37,28 +45,38 @@ class MainList extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text("News"),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              Provider.of<NewsListProvider>(context, listen: false).refreshNews();
+            },
+          )
+        ],
       ),
       body: Consumer<NewsListProvider>(
         builder: (_, provider, child) {
           return RefreshIndicator(
             onRefresh: provider.refreshNews,
-            child: provider.news.isEmpty
-              ? const Center(child: Text("No News Found"))
-              : ListView.separated(
-                  itemCount: provider.news.length,
-                  separatorBuilder: (_, __) => const Divider(),
-                  itemBuilder: (_, i) {
-                    final item = provider.news[i];
-                    return Dismissible(
-                      key: Key(item.url),
-                      onDismissed: (direction) {
-                        // TODO: Implement options (save, share, etc.)
-                        provider.removeItemAt(i);
-                      },
-                      child: NewsItem(item: item)
-                    );
-                  },
-                )
+            child: provider.error != null
+              ? Center(child: Text(provider.error))
+              : provider.news.isNotEmpty
+                ? ListView.separated(
+                    itemCount: provider.news.length,
+                    separatorBuilder: (_, __) => const Divider(),
+                    itemBuilder: (_, i) {
+                      final item = provider.news[i];
+                      return Dismissible(
+                        key: Key(item.url),
+                        onDismissed: (direction) {
+                          // TODO: Implement options (save, share, etc.)
+                          provider.removeItemAt(i);
+                        },
+                        child: NewsItem(item: item)
+                      );
+                    },
+                  )
+                : const Center(child: Text("No News Found"))
           );
         },
       ),

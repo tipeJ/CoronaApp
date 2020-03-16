@@ -6,4 +6,6 @@ const mathApiCountryUrl = "https://covid19.mathdro.id/api/countries/";
 /// The Address for the news API
 const news_api_url = "https://covid19-stats-and-news.herokuapp.com/news";
 
+const error_nointernet = "Connect to a network to proceed";
+
 const prefs_darkmode = "prefs_darkmode";
