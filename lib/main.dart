@@ -38,6 +38,15 @@ class _BottomAppBarWrapper extends StatefulWidget {
 class _BottomAppBarWrapperState extends State<_BottomAppBarWrapper> {
   int _currentPage = 1;
 
+  final _statsScreen = GlobalKey<NavigatorState>();
+
+  Future<bool> _didPopRoute() {
+    if (_currentPage == 1) {
+      return _statsScreen.currentState.maybePop();
+    }
+    return Future.value(false);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,31 +67,35 @@ class _BottomAppBarWrapperState extends State<_BottomAppBarWrapper> {
           )
         ],
         onTap: (i) {
-          setState(() {
-            _currentPage = i;
-          });
+          if (i == _currentPage && i == 1) {
+            _statsScreen.currentState.popUntil((route) => route.isFirst);
+          } else {
+            setState(() {
+              _currentPage = i;
+            });
+          }
         },
       ),
-      body: _getPage()
-    );
-  }
-
-  Widget _getPage() {
-    if (_currentPage == 0) {
-      return ChangeNotifierProvider(
-        create: (_) => NewsListProvider(),
-        child: MainList(),
-      );
-    } else if (_currentPage == 1) {
-      return ChangeNotifierProvider(
-        create: (_) => OverviewStatsProvider(),
-        child: Navigator(
-          initialRoute: '/',
-          onGenerateRoute: (settings) => StatsRouter.generateRoute(settings.name, settings.arguments),
+      body: WillPopScope(
+        onWillPop: () async => !await _didPopRoute(),
+        child: IndexedStack(
+          index: _currentPage,
+          children: [
+            ChangeNotifierProvider(
+              create: (_) => NewsListProvider(),
+              child: MainList(),
+            ),
+            ChangeNotifierProvider(
+              create: (_) => OverviewStatsProvider(),
+              child: Navigator(
+                key: _statsScreen,
+                initialRoute: '/',
+                onGenerateRoute: (settings) => StatsRouter.generateRoute(settings.name, settings.arguments),
+              )
+            )
+          ],
         )
-      );
-    } else {
-      return Scaffold();
-    }
+      )
+    );
   }
 }
