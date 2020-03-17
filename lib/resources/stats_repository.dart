@@ -83,7 +83,7 @@ List<DailyStats> _decodeDailyStats(String body) {
 List<RegionStats> _decodeRegionStats(String body) {
   final parsedJson = json.decode(body);
   List<RegionStats> stats = [];
-  for (var i = parsedJson.length-1; i >= 0; i--) {
+  for (var i = 0; i < parsedJson.length; i++) {
     stats.add(RegionStats.fromJson(parsedJson[i]));
   }
   return stats;

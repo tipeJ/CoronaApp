@@ -1,6 +1,6 @@
 const mathApiOverviewUrl = "https://covid19.mathdro.id/api";
 const mathApiDailyStatsUrl = "https://covid19.mathdro.id/api/daily";
-const mathApiAllRegionsUrl = "https://covid19.mathdro.id/api/deaths";
+const mathApiAllRegionsUrl = "https://covid19.mathdro.id/api/confirmed";
 const mathApiCountryUrl = "https://covid19.mathdro.id/api/countries/";
 
 /// The Address for the news API
