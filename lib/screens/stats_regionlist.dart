@@ -38,7 +38,7 @@ class RegionlistStatsScreen extends StatelessWidget {
 
   static final CameraPosition _hubeiPos = CameraPosition(
     target: LatLng(30.9756403482891, 112.270692167452),
-    zoom: 14.4746,
+    zoom: 3.5,
   );
 
   @override
@@ -55,11 +55,14 @@ class RegionlistStatsScreen extends StatelessWidget {
                 _regionsListController = Scaffold.of(context).showBottomSheet((context) => DraggableScrollableSheet(
                   builder: (context, controller) => _RegionList(stats: provider.stats, onSelected: (rs) => _goToRegion(rs), controller: controller),
                   initialChildSize: .3,
-                  maxChildSize: .5,
+                  maxChildSize: .7,
                   expand: false
                 ));
+                await _regionsListController.closed;
+                _regionsListController = null;
               } else {
                 _regionsListController.close();
+                _regionsListController = null;
               }
             }
           },
@@ -104,7 +107,6 @@ class RegionlistStatsScreen extends StatelessWidget {
 
 List<Circle> _parseCircles(List<RegionStats> stats) {
   final int biggest = stats.first.confirmed;
-  print(biggest);
   final List<Circle> circles = [];
   for (var i = 0; i < stats.length; i++) {
     final stat = stats[i];
@@ -112,7 +114,7 @@ List<Circle> _parseCircles(List<RegionStats> stats) {
       circleId: CircleId("${stats[i].countryRegion}$i"),
       fillColor: Colors.redAccent.withOpacity(0.5),
       strokeColor: Colors.redAccent,
-      strokeWidth: 3,
+      strokeWidth: 2,
       center: LatLng(stat.latitude, stat.longitude),
       radius: max((biggest / 10937.5) * 100 * pow(stat.confirmed, 1.09 / 2), 12500),
       consumeTapEvents: true,
