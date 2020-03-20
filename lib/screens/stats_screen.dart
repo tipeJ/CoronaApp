@@ -1,7 +1,7 @@
 import 'package:connectivity/connectivity.dart';
-import 'package:coronapp/models/models.dart';
-import 'package:coronapp/resources/resources.dart';
-import 'package:coronapp/widgets/widgets.dart';
+import 'package:CoronaApp/models/models.dart';
+import 'package:CoronaApp/resources/resources.dart';
+import 'package:CoronaApp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

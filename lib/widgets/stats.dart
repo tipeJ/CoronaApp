@@ -1,4 +1,4 @@
-import 'package:coronapp/screens/screens.dart';
+import 'package:CoronaApp/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_circular_chart/flutter_circular_chart.dart';
 import 'package:provider/provider.dart';

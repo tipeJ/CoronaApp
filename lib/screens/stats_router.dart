@@ -1,4 +1,4 @@
-import 'package:coronapp/screens/screens.dart';
+import 'package:CoronaApp/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

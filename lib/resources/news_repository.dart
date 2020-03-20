@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:coronapp/models/models.dart';
-import 'package:coronapp/resources/resources.dart';
+import 'package:CoronaApp/models/models.dart';
+import 'package:CoronaApp/resources/resources.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 

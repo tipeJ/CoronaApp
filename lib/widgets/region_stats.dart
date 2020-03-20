@@ -1,6 +1,6 @@
-import 'package:coronapp/models/models.dart';
+import 'package:CoronaApp/models/models.dart';
 import 'package:flutter/material.dart';
-import 'package:coronapp/resources/resources.dart';
+import 'package:CoronaApp/resources/resources.dart';
 
 class RegionStatsCard extends StatelessWidget {
   final RegionStats stats;

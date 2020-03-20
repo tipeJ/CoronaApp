@@ -1,7 +1,7 @@
-import 'package:coronapp/models/models.dart';
+import 'package:CoronaApp/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:coronapp/resources/resources.dart';
+import 'package:CoronaApp/resources/resources.dart';
 
 class NewsItem extends StatelessWidget {
   const NewsItem({

@@ -1,9 +1,9 @@
-import 'package:coronapp/screens/screens.dart';
-import 'package:coronapp/widgets/widgets.dart';
+import 'package:CoronaApp/screens/screens.dart';
+import 'package:CoronaApp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sticky_headers/sticky_headers/widget.dart';
-import 'package:coronapp/resources/resources.dart';
+import 'package:CoronaApp/resources/resources.dart';
 
 class TimelineStatsScreen extends StatelessWidget {
   const TimelineStatsScreen({Key key}) : super(key: key);

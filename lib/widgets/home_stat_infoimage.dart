@@ -1,6 +1,6 @@
-import 'package:coronapp/main.dart';
-import 'package:coronapp/resources/resources.dart';
-import 'package:coronapp/screens/screens.dart';
+import 'package:CoronaApp/main.dart';
+import 'package:CoronaApp/resources/resources.dart';
+import 'package:CoronaApp/screens/screens.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

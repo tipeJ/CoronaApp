@@ -1,4 +1,4 @@
-import 'package:coronapp/resources/resources.dart';
+import 'package:CoronaApp/resources/resources.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

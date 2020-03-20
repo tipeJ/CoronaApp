@@ -1,4 +1,4 @@
-import 'package:coronapp/models/models.dart';
+import 'package:CoronaApp/models/models.dart';
 import 'package:flutter/material.dart';
 
 class DailyStatsCard extends StatelessWidget {

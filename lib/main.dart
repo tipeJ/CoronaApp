@@ -1,9 +1,9 @@
-import 'package:coronapp/screens/screens.dart';
-import 'package:coronapp/screens/settings_screen.dart';
+import 'package:CoronaApp/screens/screens.dart';
+import 'package:CoronaApp/screens/settings_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:coronapp/resources/resources.dart';
+import 'package:CoronaApp/resources/resources.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,6 +41,7 @@ class _CoronaApp extends StatelessWidget {
           bool darkMode = provider.preferences.getBool(prefs_darkmode) ?? false;
           return MaterialApp(
             title: 'CoronaApp',
+            debugShowCheckedModeBanner: false,
             theme: ThemeData(
               brightness: darkMode ? Brightness.dark : Brightness.light,
               // This is the theme of your application.
