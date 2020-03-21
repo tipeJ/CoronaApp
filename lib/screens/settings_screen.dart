@@ -15,6 +15,10 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             title: const Text("Dark Mode"),
             subtitle: const Text("Enables dark theme for this application"),
+            onTap: () {
+              provider.preferences.setBool(prefs_darkmode, !(provider.preferences.get(prefs_darkmode) ?? false));
+              provider.preferencesChanged();
+            },
             trailing: Switch(
               value: provider.preferences.get(prefs_darkmode) ?? false,
               onChanged: (newValue) {
@@ -46,6 +50,10 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             title: const Text("Show Home Infographic"),
             subtitle: const Text("Shows an infographic image in the stats menu. Requires Home Country"),
+            onTap: () {
+              provider.preferences.setBool(prefs_show_home_infographic, !(provider.preferences.get(prefs_show_home_infographic) ?? false));
+              provider.preferencesChanged();
+            },
             trailing: Switch(
               value: provider.preferences.get(prefs_show_home_infographic) ?? false,
               onChanged: (newValue) {
