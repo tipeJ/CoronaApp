@@ -36,9 +36,8 @@ class CountryStatsScreen extends StatelessWidget {
       body: Consumer<CountryStatsProvider>(
         builder: (context, provider, child) {
           if (provider.stats == null) return const Center(child: CircularProgressIndicator());
-          return ListView.separated(
+          return ListView.builder(
             itemCount: provider.stats.length,
-            separatorBuilder: (_, i) => const Divider(),
             itemBuilder: (_, i) {
               return RegionStatsCard(
                 stats: provider.stats[i],
