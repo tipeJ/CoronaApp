@@ -1,4 +1,4 @@
-package com.example.coronapp
+package com.tipej.coronapp
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

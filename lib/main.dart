@@ -5,14 +5,14 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:CoronaApp/resources/resources.dart';
 
+const String _firebaseAdmobAppIDAndroid = "ca-app-pub-4126957694857478~7181910628";
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
-} 
+}
 
 class SettingsProvider extends ChangeNotifier {
   SharedPreferences preferences;
-
   void preferencesChanged() async {
     preferences = await SharedPreferences.getInstance();
     notifyListeners();
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    //FirebaseAdMob.instance.initialize(appId: _firebaseAdmobAppID);
     return ChangeNotifierProvider(
       create: (_) => SettingsProvider(),
       child: _CoronaApp(),

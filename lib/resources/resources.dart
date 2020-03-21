@@ -1,6 +1,7 @@
 export 'news_repository.dart';
 export 'stats_repository.dart';
 export 'constants.dart';
+export 'ads.dart';
 
 bool notNull(Object o) => o != null;
 

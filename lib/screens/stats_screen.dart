@@ -3,13 +3,14 @@ import 'package:CoronaApp/models/models.dart';
 import 'package:CoronaApp/resources/resources.dart';
 import 'package:CoronaApp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_native_admob/flutter_native_admob.dart';
+import 'package:flutter_native_admob/native_admob_options.dart';
 import 'package:provider/provider.dart';
 
 class OverviewStatsProvider extends ChangeNotifier {
   final _repository = StatsRepository();
   String error;
   VirusStats stats;
-
   Future<void> refreshStatus() async {
     final connectivity = await (Connectivity().checkConnectivity());
     if (connectivity == ConnectivityResult.none) {
@@ -25,7 +26,8 @@ class OverviewStatsProvider extends ChangeNotifier {
 }
 
 class StatusScreen extends StatelessWidget {
-  const StatusScreen({Key key}) : super(key: key);
+  static const _key = "ca-app-pub-3940256099942544/2247696110";
+  StatusScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,66 +45,71 @@ class StatusScreen extends StatelessWidget {
       body: RefreshIndicator(
         onRefresh: () async => Provider.of<OverviewStatsProvider>(context, listen: false).refreshStatus(),
         child: Provider.of<OverviewStatsProvider>(context, listen: false).error == null
-          ? CustomScrollView(
-              slivers: [
-                SliverPadding(
-                  padding: const EdgeInsets.all(5.0),
-                  sliver: SliverList(delegate: SliverChildListDelegate([
-                    DailyStatCard(),
-                    StatsOverviewCountCard(),
-                    OverAllStatsChart(),
-                    Row(children: [
-                      Expanded(
-                        child: Card(
-                          child: InkWell(
-                            onTap: () => Navigator.of(context).pushNamed('timeline'),
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "Timeline",
-                                style: Theme.of(context).textTheme.subhead,
-                              ),
-                            )
-                          )
-                        )
-                      ),
-                      Expanded(
-                        child: Card(
-                          child: InkWell(
-                            onTap: () => Navigator.of(context).pushNamed('allcountries'),
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "Countries",
-                                style: Theme.of(context).textTheme.subhead,
-                              ),
-                            )
-                          )
-                        )
-                      ),
-                      Expanded(
-                        child: Card(
-                          child: InkWell(
-                            onTap: () => Navigator.of(context).pushNamed('allregions'),
-                            child: Container(
-                              alignment: Alignment.center,
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                "World Map",
-                                style: Theme.of(context).textTheme.subhead,
-                              ),
-                            )
-                          )
-                        )
-                      ),
-                    ]),
-                    HomeStatImageCard()
-                  ]))
+          ? ListView(children: <Widget>[
+              DailyStatCard(),
+              StatsOverviewCountCard(),
+              OverAllStatsChart(),
+              Row(children: [
+                Expanded(
+                  child: Card(
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pushNamed('timeline'),
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Timeline",
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                      )
+                    )
+                  )
                 ),
-              ],
-          )
+                Expanded(
+                  child: Card(
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pushNamed('allcountries'),
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "Countries",
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                      )
+                    )
+                  )
+                ),
+                Expanded(
+                  child: Card(
+                    child: InkWell(
+                      onTap: () => Navigator.of(context).pushNamed('allregions'),
+                      child: Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          "World Map",
+                          style: Theme.of(context).textTheme.subhead,
+                        ),
+                      )
+                    )
+                  )
+                ),
+              ]),
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 250.0,
+                child: NativeAdmob(
+                  adUnitID: _key,
+                  options: const NativeAdmobOptions(
+                    showMediaContent: true,
+                    headlineTextStyle: NativeTextStyle(color: Colors.green)
+                  ),
+                  loading: const SizedBox(),
+                ),
+              ),
+              HomeStatImageCard()
+          ])
         : Container(
             width: MediaQuery.of(context).size.width,
             height: MediaQuery.of(context).size.height,

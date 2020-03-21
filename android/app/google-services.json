@@ -1,0 +1,41 @@
+{
+  "project_info": {
+    "project_number": "285611961364",
+    "firebase_url": "https://coronaapp-271318.firebaseio.com",
+    "project_id": "coronaapp-271318",
+    "storage_bucket": "coronaapp-271318.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:285611961364:android:594a75bb5ce4c7d32a8b01",
+        "android_client_info": {
+          "package_name": "com.tipej.coronapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "285611961364-50eaeafq2clou4rom0c1fc0b37qh79al.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvS2vdqq_64NVM2od-mARMcoYwgnDJu5I"
+        }
+      ],
+      "services": {
+        "admob_app_id" : "ca-app-pub-4126957694857478~7181910628",
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "285611961364-50eaeafq2clou4rom0c1fc0b37qh79al.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
