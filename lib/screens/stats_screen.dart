@@ -26,7 +26,7 @@ class OverviewStatsProvider extends ChangeNotifier {
 }
 
 class StatusScreen extends StatelessWidget {
-  static const _key = "ca-app-pub-3940256099942544/2247696110";
+  static const _statsAdkey = "ca-app-pub-4126957694857478/4427716789";
   StatusScreen({Key key}) : super(key: key);
 
   @override
@@ -100,7 +100,7 @@ class StatusScreen extends StatelessWidget {
                 width: MediaQuery.of(context).size.width,
                 height: 250.0,
                 child: NativeAdmob(
-                  adUnitID: _key,
+                  adUnitID: _statsAdkey,
                   options: const NativeAdmobOptions(
                     showMediaContent: true,
                     headlineTextStyle: NativeTextStyle(color: Colors.green)

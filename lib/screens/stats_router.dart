@@ -29,8 +29,8 @@ class StatsRouter {
         break;
       case 'country':
         child = ChangeNotifierProvider(
-          create: (_) => RegionListStatsProvider(countryName: args),
-          child: RegionlistStatsScreen()
+          create: (_) => CountryStatsProvider(countryName: args),
+          child: CountryStatsScreen()
         );
         break;
       default:
