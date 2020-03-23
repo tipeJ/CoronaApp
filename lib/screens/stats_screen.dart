@@ -3,8 +3,6 @@ import 'package:CoronaApp/models/models.dart';
 import 'package:CoronaApp/resources/resources.dart';
 import 'package:CoronaApp/widgets/widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_native_admob/flutter_native_admob.dart';
-import 'package:flutter_native_admob/native_admob_options.dart';
 import 'package:provider/provider.dart';
 
 class OverviewStatsProvider extends ChangeNotifier {
@@ -26,7 +24,6 @@ class OverviewStatsProvider extends ChangeNotifier {
 }
 
 class StatusScreen extends StatelessWidget {
-  static const _statsAdkey = "ca-app-pub-4126957694857478/4427716789";
   StatusScreen({Key key}) : super(key: key);
 
   @override
@@ -96,18 +93,6 @@ class StatusScreen extends StatelessWidget {
                   )
                 ),
               ]),
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 250.0,
-                child: NativeAdmob(
-                  adUnitID: _statsAdkey,
-                  options: const NativeAdmobOptions(
-                    showMediaContent: true,
-                    headlineTextStyle: NativeTextStyle(color: Colors.green)
-                  ),
-                  loading: const SizedBox(),
-                ),
-              ),
               HomeStatImageCard()
           ])
         : Container(
