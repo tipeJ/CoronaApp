@@ -29,6 +29,7 @@
 .pub-cache/
 .pub/
 /build/
+/.vscode/
 
 /android/key.properties
 /android/google-services.json
